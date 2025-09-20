@@ -11,13 +11,18 @@ from django.views import View
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TaskListView(ListView, LoginRequiredMixin):
+
+class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'index.html'
     context_object_name = 'tasks'
 
+    def get_queryset(self):
+        # فقط تسک‌های متعلق به کاربر لاگین‌شده
+        return Task.objects.filter(user=self.request.user)
 
-class TaskCreate(CreateView, LoginRequiredMixin):
+
+class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = ["title"]
     success_url = reverse_lazy("todo:task_list")
@@ -30,8 +35,7 @@ class TaskCreate(CreateView, LoginRequiredMixin):
         return Task.objects.filter(user=self.request.user)
 
 
-
-class DeleteView(DeleteView, LoginRequiredMixin):
+class DeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     context_object_name = "task"
     success_url = reverse_lazy("todo:task_list")
@@ -46,7 +50,7 @@ class DeleteView(DeleteView, LoginRequiredMixin):
         return redirect(self.success_url)
 
 
-class TaskUpdate(UpdateView, LoginRequiredMixin):
+class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     success_url = reverse_lazy("todo:task_list")
     form_class = TaskForm
@@ -59,16 +63,10 @@ class TaskUpdate(UpdateView, LoginRequiredMixin):
         return redirect('todo:task_list')
 
 
-class TaskComplete(View, LoginRequiredMixin):
+class TaskComplete(LoginRequiredMixin, View):
     model = Task
     success_url = reverse_lazy("todo:task_list")
-    ''' 
-    def get(self, request, *args, **kwargs):
-        object = Task.objects.get(id=kwargs.get("pk"))
-        object.done = True
-        object.save()
-        return redirect(self.success_url)
-    '''
+
     def get(self, request, *args, **kwargs):
         task = get_object_or_404(Task, id=kwargs.get("pk"), user=request.user)
         task.done = True

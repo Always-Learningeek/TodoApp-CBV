@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,11 +32,13 @@
     </div>
 
     {% if user.is_authenticated %}
+        <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit"> خروج </button>
+            <p> <-- برای خروج کلیک کنید</p>
+        </form>
 
-        <p>برای خروج کلیک کنید</p>
-        <a href="{% url 'accounts:logout' %}">خروج</a>
         {% include 'todo/task_form.html' %}
-
 
         <!-- div for top left corner -->
             <div class="version">
