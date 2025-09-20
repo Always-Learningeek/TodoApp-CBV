@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- todo/task_confirm_delete.html -->
+<!-- فرم حذف تسک -->
+<form method="POST" action="{% url 'todo:task_delete' task.id %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+</form>
+
+</body>
+</html>

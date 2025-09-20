@@ -1,0 +1,9 @@
+{% load static %}
+
+<div id="form">
+    <form method="post" action="{% url 'todo:task_create' %}">
+        {% csrf_token %}
+            <input class="control-" name="title" type="text" placeholder="Task title">
+            <button type="submit">I Got This!</button>
+    </form>
+</div>

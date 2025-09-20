@@ -1,0 +1,6 @@
+{% load static %}
+
+<form method="get" action="{% url 'todo:task_complete' task.pk %}">
+    {% csrf_token %}
+    <button class="check-btn"><i class="fas fa-check"></i></button>
+</form>

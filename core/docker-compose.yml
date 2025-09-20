@@ -3,12 +3,13 @@
 services:
   backend:
     build: .
+    image: todoapp-image:latest
     container_name: Todo-container
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-     - ./core:/app
+     - ./:/app
     ports:
      - "8000:8000"
-#    environment:
-#      - SECRET_KEY=test
-#      - DEBUG=True
+    environment:
+      - SECRET_KEY=test
+      - DEBUG=True

@@ -1,0 +1,10 @@
+{% load static %}
+
+
+<form method="POST" action="{% url 'todo:task_update' task.pk %}">
+    {% csrf_token %}
+    <div class="form-floating mb-3">
+        <input type="text" name="title" id="id_title_{{ task.pk }}" value="" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Change</button>
+</form>

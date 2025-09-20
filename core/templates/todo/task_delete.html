@@ -1,0 +1,6 @@
+{% load static %}
+
+<form method="post" action="{% url 'todo:task_delete' task.pk %}">
+    {% csrf_token %}
+        <button class="delete-btn"><i class="fas fa-trash"></i></button>
+</form>
